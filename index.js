@@ -1,10 +1,23 @@
-const express = require("express");
-const multer = require("multer");
-const csv = require("csv-parser");
-const pkg = require("pg");
-const fs = require("fs");
-const path = require("path");
-const dotenv = require("dotenv");
+// const express = require("express");
+// const multer = require("multer");
+// const csv = require("csv-parser");
+// const pkg = require("pg");
+// const fs = require("fs");
+// const path = require("path");
+// const dotenv = require("dotenv");
+
+import express from 'express';
+import multer from 'multer';
+import csv from 'csv-parser';
+import pkg from 'pg';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import dotenv from "dotenv"
+
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 dotenv.config();
 const app = express();
@@ -21,9 +34,8 @@ const pool = new Pool({
 });
 
 app.post("/bulk/order", uploads.single("file"), (req, res) => {
-  console.log(req.file + "line 26");
   const filepath = path.join(__dirname, "uploads", req.file.filename);
-  console.log(filepath);
+//   console.log(filepath);
   const csvData = [];
 
   fs.createReadStream(filepath)
